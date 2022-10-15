@@ -5,8 +5,9 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
 
-    <!-- Menu -->
+    <!-- Action Bar  -->
     <string name="action_settings">Ustawienia</string>
+    <string name="action_about">O programie</string>
 
     <string name="settings_main_header">Ogólne</string>
     <string name="pictogram_header">Piktogramy</string>

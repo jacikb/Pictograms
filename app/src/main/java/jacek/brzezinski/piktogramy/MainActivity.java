@@ -9,12 +9,15 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -23,8 +26,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
     GridView simpleGrid;
-    //    int logos[] = {R.drawable.jeszcze, R.drawable.toaleta, R.drawable.pic, R.drawable.odpoczac};
-//    int audios[] = {R.raw.jeszcze, R.raw.toaleta, R.raw.pic, R.raw.odpoczac};
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
     int gridSize = 2;
@@ -83,30 +84,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+//        return super.onCreateOptionsMenu(menu);
+    }
 
-//    @Override
-//    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        updateFromPreferences();
-//        mp = MediaPlayer.create(MainActivity.this, R.raw.muzyka);
-//        mp.start();
-//        Log.e(TAG,"onConfigurationChanged");
-//        MainActivity.this.finish();
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openSettingsActivity();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
-//        startActivity(intent);
-//        Log.e(TAG,"StartActivity Settings");
     }
 
     // Call Back method  to get the Message form other Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-//        Log.e(TAG,"onActivityResult");
         updateFromPreferences();
         recreate();
     }
