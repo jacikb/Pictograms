@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -32,12 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Log.e(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mp = MediaPlayer.create(MainActivity.this, R.raw.start);
-        //  mp.start();
 
+        mp = MediaPlayer.create(MainActivity.this, R.raw.start);
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
@@ -46,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         simpleGrid = (GridView) findViewById(R.id.simpleGridView); // init GridView
-        //120 na telefon 3 kolumny
         //simpleGrid.setNumColumns((int) dpWidth / (100 + (gridSize * 40)));
-        simpleGrid.setNumColumns(gridSize);
-//        simpleGrid.setNumColumns((int) (dpWidth / 140));
+        //1024 or 600
+        simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
+        Log.e(TAG, "onCreate  dpWidth " + dpWidth);
+
         // Create an object of CustomAdapter and set Adapter to GirdView
-        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), (100 + (gridSize * 40)), logos, audios);
+        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), (int) (dpWidth / (100 + (gridSize * 40))), logos, audios);
         simpleGrid.setAdapter(customAdapter);
         // implement setOnItemClickListener event on GridView
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,12 +59,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     if (mp.isPlaying()) {
-//                        mp.stop();
-//                        mp.release();
-                    } else {
-                        mp = MediaPlayer.create(MainActivity.this, audios.get(position));
-                        mp.start();
+                        mp.stop();
+                        mp.release();
                     }
+                    mp = MediaPlayer.create(MainActivity.this, audios.get(position));
+                    mp.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
