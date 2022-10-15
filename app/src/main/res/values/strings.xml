@@ -4,7 +4,10 @@
     <string name="button_setup">ust.</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
+
+    <!-- Menu -->
+    <string name="action_settings">Ustawienia</string>
+
     <string name="settings_main_header">Ogólne</string>
     <string name="pictogram_header">Piktogramy</string>
 

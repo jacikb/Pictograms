@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
-
     GridView simpleGrid;
     //    int logos[] = {R.drawable.jeszcze, R.drawable.toaleta, R.drawable.pic, R.drawable.odpoczac};
 //    int audios[] = {R.raw.jeszcze, R.raw.toaleta, R.raw.pic, R.raw.odpoczac};
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d(TAG, "onCreate");
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -43,12 +43,11 @@ public class MainActivity extends AppCompatActivity {
         if (audios.size() == 0) {
             updateFromPreferences();
         }
-
+        Log.d(TAG, "onCreate audions " + audios.size());
         simpleGrid = (GridView) findViewById(R.id.simpleGridView); // init GridView
-        //simpleGrid.setNumColumns((int) dpWidth / (100 + (gridSize * 40)));
+        // simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
         //1024 or 600
-        simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
-        Log.e(TAG, "onCreate  dpWidth " + dpWidth);
+        simpleGrid.setNumColumns((int) (dpWidth / 140));
 
         // Create an object of CustomAdapter and set Adapter to GirdView
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), (int) (dpWidth / (100 + (gridSize * 40))), logos, audios);
