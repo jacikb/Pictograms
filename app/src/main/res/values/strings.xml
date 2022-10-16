@@ -7,6 +7,8 @@
     <!-- Action Bar  -->
     <string name="action_settings">Ustawienia</string>
     <string name="action_about">O programie</string>
+    <string name="action_battery">Bat.</string>
+    <string name="action_battery_charging">Charging</string>
 
     <string name="settings_main_header">Ogólne</string>
     <string name="pictogram_header">Piktogramy</string>

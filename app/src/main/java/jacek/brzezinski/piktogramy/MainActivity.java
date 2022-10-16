@@ -4,6 +4,7 @@ package jacek.brzezinski.piktogramy;
  */
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ActionMenuView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,13 +24,15 @@ import androidx.preference.PreferenceManager;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MyActivity";
     private MediaPlayer mp;
     GridView simpleGrid;
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
     int gridSize = 140;
+    private BatteryReceiver batteryReceiver = new BatteryReceiver();
+    private IntentFilter intentBatteryFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 
-    private static final String TAG = "MyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        Log.d(TAG, "onCreate");
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
+
+
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
@@ -94,6 +101,18 @@ public class MainActivity extends AppCompatActivity {
     public void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(batteryReceiver, intentBatteryFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(batteryReceiver);
+        super.onPause();
     }
 
     // Call Back method  to get the Message form other Activity
