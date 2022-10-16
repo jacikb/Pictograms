@@ -25,6 +25,9 @@
             app:key="p_nie"
             app:title="Nie" />
         <CheckBoxPreference
+            app:key="p_koniec"
+            app:title="Koniec" />
+        <CheckBoxPreference
             app:key="p_toaleta"
             app:title="Toaleta" />
         <CheckBoxPreference

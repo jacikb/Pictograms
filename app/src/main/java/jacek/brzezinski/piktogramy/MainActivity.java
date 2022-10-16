@@ -116,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
             logos.add(R.drawable.nie);
             audios.add(R.raw.nie);
         }
+        if (prefs.getBoolean("p_koniec", true)) {
+            logos.add(R.drawable.koniec);
+            audios.add(R.raw.koniec);
+        }
         if (prefs.getBoolean("p_toaleta", true)) {
             logos.add(R.drawable.toaleta);
             audios.add(R.raw.toaleta);
