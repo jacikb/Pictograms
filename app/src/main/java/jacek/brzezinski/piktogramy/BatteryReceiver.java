@@ -49,9 +49,8 @@ public class BatteryReceiver extends BroadcastReceiver {
 //                case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
 //                    break;
                 }
-                batteryPercent.setText("Bat. " + percent + "%");
+                batteryPercent.setText("Bat. " + Math.round(percent) + "%");
             }
-
         }
     }
 
