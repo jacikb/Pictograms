@@ -8,13 +8,10 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     GridView simpleGrid;
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
-    int gridSize = 2;
+    int gridSize = 140;
 
     private static final String TAG = "MyActivity";
 
@@ -36,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate");
+//        Log.d(TAG, "onCreate");
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -44,12 +41,10 @@ public class MainActivity extends AppCompatActivity {
         if (audios.size() == 0) {
             updateFromPreferences();
         }
-        Log.d(TAG, "onCreate audions " + audios.size());
         simpleGrid = (GridView) findViewById(R.id.simpleGridView); // init GridView
         // simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
         //1024 or 600
-        simpleGrid.setNumColumns((int) (dpWidth / 140));
-
+        simpleGrid.setNumColumns((int) (dpWidth / gridSize));
         // Create an object of CustomAdapter and set Adapter to GirdView
         CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), (int) (dpWidth / (100 + (gridSize * 40))), logos, audios);
         simpleGrid.setAdapter(customAdapter);
@@ -73,22 +68,12 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intent); // start Intent
             }
         });
-
-
-        //Button setup
-        Button button = (Button) findViewById(R.id.button_setup);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                openSettingsActivity();
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-//        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -96,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 openSettingsActivity();
+                return true;
+
+            case R.id.action_about:
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -174,9 +164,9 @@ public class MainActivity extends AppCompatActivity {
             logos.add(R.drawable.spac);
             audios.add(R.raw.spac);
         }
-        gridSize = Integer.parseInt(prefs.getString("grid_size", "2"));
-        if (gridSize < 1 || gridSize > 3) {
-            gridSize = 2;
+        gridSize = Integer.parseInt(prefs.getString("grid_size", "140"));
+        if (gridSize < 100 || gridSize > 180) {
+            gridSize = 140;
         }
     }
 }

@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Piktogramy</string>
+    <string name="app_name">Piktogramy Pawła</string>
     <string name="app_name_setup">Ustawienia</string>
-    <string name="button_setup">ust.</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Ustawienia</string>
 
 
     <!-- Action Bar  -->
@@ -22,4 +21,11 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+    <!-- Sync Preferences -->
+    <string name="about_title">Program napisany dla Pawła</string>
+    <string name="about_author">Autor:</string>
+    <string name="about_author_name">Jacek Brzeziński</string>
+
 </resources>
