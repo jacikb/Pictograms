@@ -4,7 +4,9 @@ import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -58,7 +60,8 @@ public class BatteryReceiver extends BroadcastReceiver {
         return status;
     }
 
-    public float getPercent() {
+    public float getPercent(Context context) {
         return percent;
     }
+
 }

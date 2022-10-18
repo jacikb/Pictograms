@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d(TAG, "onCreate");
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
 
-
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
