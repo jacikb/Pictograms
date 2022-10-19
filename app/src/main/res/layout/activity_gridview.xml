@@ -10,5 +10,5 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/tak" />
+        android:src="@drawable/p_pic" />
 </LinearLayout>
