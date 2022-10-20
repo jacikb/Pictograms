@@ -2,10 +2,12 @@
     <string name="app_name">Piktogramy Pawła</string>
     <string name="app_name_setup">Ustawienia</string>
     <string name="title_activity_settings">Ustawienia</string>
+    <string name="title_activity_pictograms">Piktogramy</string>
 
 
     <!-- Action Bar  -->
     <string name="action_settings">Ustawienia</string>
+    <string name="action_pictograms">Piktogramy</string>
     <string name="action_about">O programie</string>
     <string name="action_battery"> </string>
     <string name="action_battery_charging">Charging</string>
