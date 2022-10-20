@@ -17,52 +17,52 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/pictogram_header">
-        <CheckBoxPreference
-            app:key="p_tak"
-            app:title="Tak" />
-        <CheckBoxPreference
-            app:key="p_nie"
-            app:title="Nie" />
-        <CheckBoxPreference
-            app:key="p_koniec"
-            app:title="Koniec" />
-        <CheckBoxPreference
-            app:key="p_toaleta"
-            app:title="Toaleta" />
-        <CheckBoxPreference
-            app:key="p_pic"
-            app:title="Pić" />
-        <CheckBoxPreference
-            app:key="p_jesc"
-            app:title="Jeść" />
-        <CheckBoxPreference
-            app:key="p_kanapka"
-            app:title="Kanapka" />
-        <CheckBoxPreference
-            app:key="p_owoce"
-            app:title="Owoce" />
-        <CheckBoxPreference
-            app:key="p_czekolada"
-            app:title="Czekolada" />
-        <CheckBoxPreference
-            app:key="p_jablko"
-            app:title="Jabłko" />
-        <CheckBoxPreference
-            app:key="p_komputer"
-            app:title="Komputer" />
-        <CheckBoxPreference
-            app:key="p_jeszcze"
-            app:title="Jeszcze" />
-        <CheckBoxPreference
-            app:key="p_kapac"
-            app:title="Kąpać" />
-        <CheckBoxPreference
-            app:key="p_odpoczac"
-            app:title="Odpocząć" />
-        <CheckBoxPreference
-            app:key="p_spac"
-            app:title="Spać" />
+<!--    <PreferenceCategory app:title="@string/pictogram_header">-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_tak"-->
+<!--            app:title="Tak" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_nie"-->
+<!--            app:title="Nie" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_koniec"-->
+<!--            app:title="Koniec" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_toaleta"-->
+<!--            app:title="Toaleta" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_pic"-->
+<!--            app:title="Pić" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_jesc"-->
+<!--            app:title="Jeść" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_kanapka"-->
+<!--            app:title="Kanapka" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_owoce"-->
+<!--            app:title="Owoce" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_czekolada"-->
+<!--            app:title="Czekolada" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_jablko"-->
+<!--            app:title="Jabłko" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_komputer"-->
+<!--            app:title="Komputer" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_jeszcze"-->
+<!--            app:title="Jeszcze" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_kapac"-->
+<!--            app:title="Kąpać" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_odpoczac"-->
+<!--            app:title="Odpocząć" />-->
+<!--        <CheckBoxPreference-->
+<!--            app:key="p_spac"-->
+<!--            app:title="Spać" />-->
         <!--        <SwitchPreferenceCompat-->
         <!--            app:key="sync"-->
         <!--            app:title="@string/sync_title" />-->
@@ -74,6 +74,6 @@
         <!--            app:summaryOn="@string/attachment_summary_on"-->
         <!--            app:title="@string/attachment_title" />-->
 
-    </PreferenceCategory>
+<!--    </PreferenceCategory>-->
 
 </PreferenceScreen>
