@@ -32,35 +32,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         PictogramModel pictogramModel = new PictogramModel();
         pictogramModel.createNew("Tak", "p_tak", 1);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Nie", "p_nie", 2);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Koniec", "p_koniec", 3);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Toaleta", "p_toaleta", 4);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Pić", "p_pic", 5);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Jeść", "p_jesc", 6);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Kanapka", "p_kanapka", 7);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Owoce", "p_owoce", 8);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Czekolada", "p_czekolada", 9);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Jabłko", "p_jablko", 10);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Komputer", "p_komputer", 11);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Jeszcze", "p_jeszcze", 12);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Kąpać", "p_kapac", 13);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Odpocząć", "p_odpoczac", 14);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Spać", "p_spac", 15);
-        addOneOnCreate(db,pictogramModel);
+        addOneOnCreate(db, pictogramModel);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    
+
     public boolean addOne(PictogramModel pictogramModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -101,16 +101,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean updateOne(PictogramModel pictogramModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int id = pictogramModel.getId();
+        ContentValues cv = new ContentValues();
+        cv.put(P_COLUMN_NAME, pictogramModel.getName());
+        cv.put(P_COLUMN_PATH, pictogramModel.getPath());
+        cv.put(P_COLUMN_POSITION, pictogramModel.getPosition());
+        cv.put(P_COLUMN_ACTIVE, pictogramModel.isActive());
+
+        long update = db.update(P_TABLE, cv, P_COLUMN_ID + "=" + Integer.toString(id), null);
+        return update == 1;
+    }
+
     public boolean deleteOne(PictogramModel pictogramModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         String stringQuery = "DELETE FROM " + P_TABLE + " WHERE " + P_COLUMN_ID + "=" + pictogramModel.getId();
         Cursor cursor = db.rawQuery(stringQuery, null);
-        if (cursor.moveToFirst()) {
-            return true;
-        } else {
-            return false;
-        }
+        return cursor.moveToFirst();
     }
 
     public List<PictogramModel> getAll(boolean onlyActive) {
@@ -126,13 +135,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 String code = cursor.getString(2);
                 int position = cursor.getInt(3);
-                boolean active = (cursor.getInt(4) == 1) ? true : false;
+                boolean active = cursor.getInt(4) == 1;
                 PictogramModel pictogramModel = new PictogramModel(id, name, code, position, active);
                 returnList.add(pictogramModel);
             } while (cursor.moveToNext());
         }
         cursor.close();
-       // db.close();
+        // db.close();
         return returnList;
     }
 }

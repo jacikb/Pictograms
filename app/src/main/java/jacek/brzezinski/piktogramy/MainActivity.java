@@ -97,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_settings_app:
                 openSettingsActivity();
+                return true;
+            case R.id.action_settings_pictograms:
+                openSettingsPictogramActivity();
                 return true;
 
             case R.id.action_about:
@@ -111,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
+        startActivityForResult(intent, 2);// Activity is started with requestCode 2
+    }
+    public void openSettingsPictogramActivity() {
+        Intent intent = new Intent(this, PictogramSettingsActivity.class);
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
     }
 
