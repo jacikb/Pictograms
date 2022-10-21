@@ -1,6 +1,7 @@
 package jacek.brzezinski.piktogramy;
 /**
  * Audio from https://soundoftext.com/
+ * example Toast.makeText(context, pictogramModel.getPath() + " " + (isChecked ? "checked" : "unchecked"), Toast.LENGTH_SHORT).show();
  */
 
 import android.content.Intent;
@@ -37,12 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     GridView simpleGrid;
-    int gridSize = 140;
+    public int gridSize = 140;
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
     List<PictogramModel> pictograms;
-
-    ArrayAdapter customerArrayAdapter;
     DataBaseHelper databaseHelper;
 
     @Override
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ShowPictograms(databaseHelper);
-//        Log.d(TAG, "onCreate");
+
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
 
         if (audios.size() == 0) {
@@ -149,16 +148,11 @@ public class MainActivity extends AppCompatActivity {
         // simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
         //1024 or 600
         simpleGrid.setNumColumns((int) (dpWidth / gridSize));
-        Log.i(TAG, "************************* ShowPictograms");
         pictograms = databaseHelper.getAll(true);
 
         // Create an object of CustomAdapter and set Adapter to GirdView
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, (int) (dpWidth / (100 + (gridSize * 40))), pictograms);
-        Log.i(TAG, "************************* ShowPictograms customAdapter");
         simpleGrid.setAdapter(customAdapter);
-
-//        customerArrayAdapter = new ArrayAdapter<PictogramModel>(MainActivity.this, android.R.layout.simple_list_item_1, databaseHelper.getAll(true));
-//        simpleGrid.setAdapter(customerArrayAdapter);
 
     }
 
@@ -166,66 +160,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         logos.clear();
         audios.clear();
-//        if (prefs.getBoolean("p_tak", true)) {
-//            logos.add(R.drawable.p_tak);
-//            audios.add(R.raw.tak);
-//        }
-//        if (prefs.getBoolean("p_nie", true)) {
-//            logos.add(R.drawable.p_nie);
-//            audios.add(R.raw.nie);
-//        }
-//        if (prefs.getBoolean("p_koniec", true)) {
-//            logos.add(R.drawable.p_koniec);
-//            audios.add(R.raw.koniec);
-//        }
-//        if (prefs.getBoolean("p_toaleta", true)) {
-//            logos.add(R.drawable.p_toaleta);
-//            audios.add(R.raw.toaleta);
-//        }
-//        if (prefs.getBoolean("p_pic", true)) {
-//            logos.add(R.drawable.p_pic);
-//            audios.add(R.raw.pic);
-//        }
-//        if (prefs.getBoolean("p_jesc", true)) {
-//            logos.add(R.drawable.p_jesc);
-//            audios.add(R.raw.jesc);
-//        }
-//        if (prefs.getBoolean("p_kanapka", true)) {
-//            logos.add(R.drawable.p_kanapka);
-//            audios.add(R.raw.kanapka);
-//        }
-//        if (prefs.getBoolean("p_owoce", true)) {
-//            logos.add(R.drawable.p_owoce);
-//            audios.add(R.raw.owoce);
-//        }
-//        if (prefs.getBoolean("p_czekolada", true)) {
-//            logos.add(R.drawable.p_czekolada);
-//            audios.add(R.raw.czekolada);
-//        }
-//        if (prefs.getBoolean("p_jablko", true)) {
-//            logos.add(R.drawable.p_jablko);
-//            audios.add(R.raw.jablko);
-//        }
-//        if (prefs.getBoolean("p_komputer", true)) {
-//            logos.add(R.drawable.p_komputer);
-//            audios.add(R.raw.komputer);
-//        }
-//        if (prefs.getBoolean("p_jeszcze", true)) {
-//            logos.add(R.drawable.p_jeszcze);
-//            audios.add(R.raw.jeszcze);
-//        }
-//        if (prefs.getBoolean("p_kapac", true)) {
-//            logos.add(R.drawable.p_kapac);
-//            audios.add(R.raw.kapac);
-//        }
-//        if (prefs.getBoolean("p_odpoczac", true)) {
-//            logos.add(R.drawable.p_odpoczac);
-//            audios.add(R.raw.odpoczac);
-//        }
-//        if (prefs.getBoolean("p_spac", true)) {
-//            logos.add(R.drawable.p_spac);
-//            audios.add(R.raw.spac);
-//        }
         gridSize = Integer.parseInt(prefs.getString("grid_size", "140"));
         if (gridSize < 100 || gridSize > 180) {
             gridSize = 140;

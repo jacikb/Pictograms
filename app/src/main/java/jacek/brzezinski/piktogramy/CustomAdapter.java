@@ -25,10 +25,7 @@ public class CustomAdapter extends BaseAdapter {
 
     public CustomAdapter(Context applicationContext, int gridHeight, List<PictogramModel> pictograms) {
         this.context = applicationContext;
-
         this.pictograms = pictograms;
-        //this.audios = new ArrayList<Integer>(audios);
-
         inflter = (LayoutInflater.from(applicationContext));
     }
 
