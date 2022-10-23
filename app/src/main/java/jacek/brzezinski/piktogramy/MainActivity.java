@@ -1,7 +1,7 @@
 package jacek.brzezinski.piktogramy;
 /**
  * Audio from https://soundoftext.com/
- * example Toast.makeText(context, pictogramModel.getPath() + " " + (isChecked ? "checked" : "unchecked"), Toast.LENGTH_SHORT).show();
+ * example Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
  */
 
 import android.content.Intent;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     GridView simpleGrid;
-    public int gridSize = 140;
+    public int gridSize = 150;
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
     List<PictogramModel> pictograms;
@@ -53,15 +53,8 @@ public class MainActivity extends AppCompatActivity {
         packageName = this.getPackageName();
         databaseHelper = new DataBaseHelper(MainActivity.this);
 
-
-        ShowPictograms(databaseHelper);
-
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
-
-        if (audios.size() == 0) {
-            updateFromPreferences();
-        }
-
+        ShowPictograms(databaseHelper);
 
         // implement setOnItemClickListener event on GridView
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
     }
+
     public void openSettingsPictogramActivity() {
         Intent intent = new Intent(this, PictogramSettingsActivity.class);
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
@@ -141,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ShowPictograms(DataBaseHelper dataBaseHelper) {
-
+        updateFromPreferences();
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
@@ -151,18 +145,16 @@ public class MainActivity extends AppCompatActivity {
         pictograms = databaseHelper.getAll(true);
 
         // Create an object of CustomAdapter and set Adapter to GirdView
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, (int) (dpWidth / (100 + (gridSize * 40))), pictograms);
+        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, (gridSize * (int) displayMetrics.density), pictograms);
         simpleGrid.setAdapter(customAdapter);
 
     }
 
     public void updateFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        logos.clear();
-        audios.clear();
-        gridSize = Integer.parseInt(prefs.getString("grid_size", "140"));
-        if (gridSize < 100 || gridSize > 180) {
-            gridSize = 140;
+        gridSize = Integer.parseInt(prefs.getString("grid_size", "150"));
+        if (gridSize < 100 || gridSize > 300) {
+            gridSize = 150;
         }
     }
 

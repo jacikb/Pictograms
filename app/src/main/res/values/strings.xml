@@ -31,5 +31,7 @@
     <string name="about_title">Program napisany dla Pawła</string>
     <string name="about_author">Autor:</string>
     <string name="about_author_name">Jacek Brzeziński</string>
+    <string name="Zapisz">buttonNewIconSave</string>
+    <string name="pick_image_intent_text">Slect image</string>
 
 </resources>

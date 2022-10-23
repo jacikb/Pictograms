@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/drawable-anydpi/ic_action_add_camera.xml" value="0.234" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/drawable/ic_charging.xml" value="0.1185" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/drawable/ic_menu.xml" value="0.1935" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_gridview.xml" value="0.11574074074074074" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_info.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_main.xml" value="0.14868804664723032" />
+        <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_pictogram_add.xml" value="0.25" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_pictogram_gridview.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_pictogram_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Jacek/AndroidStudioProjects/piktogramy/app/src/main/res/layout/activity_second.xml" value="0.36666666666666664" />
