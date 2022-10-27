@@ -9,8 +9,8 @@
 
     <string-array name="size_values">
         <item>100</item>
-        <item>150</item>
-        <item>200</item>
-        <item>250</item>
+        <item>140</item>
+        <item>180</item>
+        <item>220</item>
     </string-array>
 </resources>

@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        gridSize = Integer.parseInt(prefs.getString("grid_size", "150"));
+        gridSize = Integer.parseInt(prefs.getString("grid_size", "140"));
         if (gridSize < 100 || gridSize > 300) {
-            gridSize = 150;
+            gridSize = 140;
         }
     }
 
