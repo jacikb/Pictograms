@@ -22,7 +22,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String P_COLUMN_ACTIVE = "ACTIVE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "pictogram.db", null, 1);
+        super(context, "pictogram.db", null, 2);
     }
 
     @Override
@@ -57,15 +57,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Kąpać", "p_kapac", 13);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Odpocząć", "p_odpoczac", 14);
+        pictogramModel.createNew("Spacer", "p_spacer", 14);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Spać", "p_spac", 15);
+        pictogramModel.createNew("Zimno", "p_zimno", 15);
+        addOneOnCreate(db, pictogramModel);
+        pictogramModel.createNew("Odpocząć", "p_odpoczac", 16);
+        addOneOnCreate(db, pictogramModel);
+        pictogramModel.createNew("Spać", "p_spac", 17);
         addOneOnCreate(db, pictogramModel);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        String createTableStatement = "DROP TABLE IF EXISTS " + P_TABLE;
+        db.execSQL(createTableStatement);
+        onCreate(db);
     }
 
     public boolean addOneOnCreate(SQLiteDatabase db, PictogramModel pictogramModel) {
