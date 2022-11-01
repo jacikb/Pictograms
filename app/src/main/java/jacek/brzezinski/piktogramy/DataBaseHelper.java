@@ -23,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String P_COLUMN_ACTIVE = "ACTIVE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "pictogram.db", null, 1);
+        super(context, "pictogram.db", null, 3);
     }
 
     @Override
