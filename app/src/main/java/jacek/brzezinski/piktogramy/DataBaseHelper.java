@@ -18,52 +18,53 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String P_COLUMN_ID = "ID";
     public static final String P_COLUMN_NAME = "NAME";
     public static final String P_COLUMN_PATH = "PATH";
+    public static final String P_COLUMN_RESOURCE = "RESOURCE";
     public static final String P_COLUMN_POSITION = "POSITION";
     public static final String P_COLUMN_ACTIVE = "ACTIVE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "pictogram.db", null, 2);
+        super(context, "pictogram.db", null, 3);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + P_TABLE + " (" + P_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + P_COLUMN_NAME + " TEXT, " + P_COLUMN_PATH + " TEXT, " + P_COLUMN_POSITION + " INTEGER,  " + P_COLUMN_ACTIVE + " BOOL)";
+        String createTableStatement = "CREATE TABLE " + P_TABLE + " (" + P_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + P_COLUMN_NAME + " TEXT, " + P_COLUMN_PATH + " TEXT, " + P_COLUMN_RESOURCE + " BOOL, " + P_COLUMN_POSITION + " INTEGER,  " + P_COLUMN_ACTIVE + " BOOL)";
         db.execSQL(createTableStatement);
 
         PictogramModel pictogramModel = new PictogramModel();
-        pictogramModel.createNew("Tak", "p_tak", 1);
+        pictogramModel.createNew("Tak", "p_tak", true, 1);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Nie", "p_nie", 2);
+        pictogramModel.createNew("Nie", "p_nie", true, 2);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Koniec", "p_koniec", 3);
+        pictogramModel.createNew("Koniec", "p_koniec", true, 3);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Toaleta", "p_toaleta", 4);
+        pictogramModel.createNew("Toaleta", "p_toaleta", true, 4);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Pić", "p_pic", 5);
+        pictogramModel.createNew("Pić", "p_pic", true, 5);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Jeść", "p_jesc", 6);
+        pictogramModel.createNew("Jeść", "p_jesc", true, 6);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Kanapka", "p_kanapka", 7);
+        pictogramModel.createNew("Kanapka", "p_kanapka", true,7);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Owoce", "p_owoce", 8);
+        pictogramModel.createNew("Owoce", "p_owoce", true, 8);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Czekolada", "p_czekolada", 9);
+        pictogramModel.createNew("Czekolada", "p_czekolada", true, 9);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Jabłko", "p_jablko", 10);
+        pictogramModel.createNew("Jabłko", "p_jablko", true, 10);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Komputer", "p_komputer", 11);
+        pictogramModel.createNew("Komputer", "p_komputer", true, 11);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Jeszcze", "p_jeszcze", 12);
+        pictogramModel.createNew("Jeszcze", "p_jeszcze", true, 12);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Kąpać", "p_kapac", 13);
+        pictogramModel.createNew("Kąpać", "p_kapac", true, 13);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Spacer", "p_spacer", 14);
+        pictogramModel.createNew("Spacer", "p_spacer", true, 14);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Zimno", "p_zimno", 15);
+        pictogramModel.createNew("Zimno", "p_zimno", true, 15);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Odpocząć", "p_odpoczac", 16);
+        pictogramModel.createNew("Odpocząć", "p_odpoczac", true, 16);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Spać", "p_spac", 17);
+        pictogramModel.createNew("Spać", "p_spac", true, 17);
         addOneOnCreate(db, pictogramModel);
     }
 
@@ -78,6 +79,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(P_COLUMN_NAME, pictogramModel.getName());
         cv.put(P_COLUMN_PATH, pictogramModel.getPath());
+        cv.put(P_COLUMN_RESOURCE, pictogramModel.isResource() ? 1 : 0);
         cv.put(P_COLUMN_POSITION, pictogramModel.getPosition());
         cv.put(P_COLUMN_ACTIVE, pictogramModel.isActive());
 
@@ -95,6 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(P_COLUMN_NAME, pictogramModel.getName());
         cv.put(P_COLUMN_PATH, pictogramModel.getPath());
+        cv.put(P_COLUMN_RESOURCE, pictogramModel.isResource());
         cv.put(P_COLUMN_POSITION, pictogramModel.getPosition());
         cv.put(P_COLUMN_ACTIVE, pictogramModel.isActive());
 
@@ -113,6 +116,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(P_COLUMN_NAME, pictogramModel.getName());
         cv.put(P_COLUMN_PATH, pictogramModel.getPath());
+        cv.put(P_COLUMN_RESOURCE, pictogramModel.isResource());
         cv.put(P_COLUMN_POSITION, pictogramModel.getPosition());
         cv.put(P_COLUMN_ACTIVE, pictogramModel.isActive());
 
@@ -139,10 +143,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
-                String code = cursor.getString(2);
-                int position = cursor.getInt(3);
-                boolean active = cursor.getInt(4) == 1;
-                PictogramModel pictogramModel = new PictogramModel(id, name, code, position, active);
+                String path = cursor.getString(2);
+                boolean resource = cursor.getInt(3) == 1;
+                int position = cursor.getInt(4);
+                boolean active = cursor.getInt(5) == 1;
+                PictogramModel pictogramModel = new PictogramModel(id, name, path, resource, position, active);
                 returnList.add(pictogramModel);
             } while (cursor.moveToNext());
         }
