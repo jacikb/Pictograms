@@ -1,6 +1,8 @@
 package jacek.brzezinski.piktogramy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,11 +24,13 @@ public class PictogramSettingsAdapter extends BaseAdapter {
     private static final String TAG = "CustomAdapter";
     DataBaseHelper dataBaseHelper;
     Context context;
+    String imageDir;
     List<PictogramModel> pictograms;
     LayoutInflater inflter;
 
     public PictogramSettingsAdapter(Context applicationContext, DataBaseHelper dataBaseHelper, List<PictogramModel> pictograms) {
         this.context = applicationContext;
+        this.imageDir = context.getFilesDir() + "/image/";
         this.pictograms = pictograms;
         this.inflter = (LayoutInflater.from(applicationContext));
         this.dataBaseHelper = dataBaseHelper;
@@ -55,7 +59,20 @@ public class PictogramSettingsAdapter extends BaseAdapter {
         EditText e_name = (EditText) view.findViewById(R.id.pictogramListName);
 //        TextView editPath = (TextView) view.findViewById(R.id.pictogramListAPath);
         Switch e_active = (Switch) view.findViewById(R.id.pictogramListActive);
-        icon.setImageResource(MainActivity.getResource("drawable", pictogramModel.getPath()));
+
+        try {
+            if (pictogramModel.isResource()) {
+                icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
+            } else {
+                String fileName = imageDir + pictogramModel.getPath() + ".jpg";
+                Bitmap imageBitmap;
+                imageBitmap = BitmapFactory.decodeFile(fileName);
+                icon.setImageBitmap(imageBitmap);
+            }
+        } catch (Exception e) {
+            icon.setImageResource(R.drawable.no_foto);
+        }
+
         e_name.setText(pictogramModel.getName());
         e_active.setChecked(pictogramModel.isActive());
         e_active.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
