@@ -67,7 +67,6 @@ public class PictogramSettingsAdapter extends BaseAdapter {
                 icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
             } else {
                 String fileName = imageDir + pictogramModel.getPath() + ".jpg";
-                Log.w("********** CUSTOM IMAGE", fileName);
                 Bitmap imageBitmap;
                 imageBitmap = BitmapFactory.decodeFile(fileName);
                 icon.setImageBitmap(imageBitmap);
