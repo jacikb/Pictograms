@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
                         mp.stop();
                         mp.release();
                     }
-                    mp = MediaPlayer.create(MainActivity.this, getResourceAudio(pictogramModel));
+                    if (pictogramModel.isResource()) {
+                        mp = MediaPlayer.create(MainActivity.this, getResourceAudio(pictogramModel));
+                    } else {
+                        File audioFile = (new File(getFilesDir() + "/audio/" + pictogramModel.getPath() + ".mp3"));
+                        mp = MediaPlayer.create(MainActivity.this, Uri.fromFile(audioFile));
+                    }
                     mp.start();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -92,6 +92,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public PictogramModel getById(int id) {
+        PictogramModel pictogramModel = new PictogramModel();
+        String queryString = "SELECT * FROM " + P_TABLE + " WHERE " + P_COLUMN_ID + "=" + id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        // is result
+        if (cursor.moveToFirst()) {
+            pictogramModel.setId(cursor.getInt(0));
+            pictogramModel.setName(cursor.getString(1));
+            pictogramModel.setPath(cursor.getString(2));
+            pictogramModel.setResource(cursor.getInt(3) == 1);
+            pictogramModel.setPosition(cursor.getInt(4));
+            pictogramModel.setActive(cursor.getInt(5) == 1);
+        }
+        cursor.close();
+        db.close();
+        return pictogramModel;
+    }
+
     public boolean addOne(PictogramModel pictogramModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -132,6 +151,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
+    public int getMaxPosition() {
+        //get data from database
+        int position = 0;
+        String queryString = "SELECT max(position) as position FROM " + P_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        // is result
+        if (cursor.moveToFirst()) {
+            position = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return position;
+    }
+
     public List<PictogramModel> getAll(boolean onlyActive) {
         List<PictogramModel> returnList = new ArrayList<>();
         //get data from database
@@ -152,7 +186,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        // db.close();
+        db.close();
         return returnList;
     }
 }

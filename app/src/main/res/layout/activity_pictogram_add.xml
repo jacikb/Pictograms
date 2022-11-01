@@ -11,13 +11,14 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:enabled="true"
         android:onClick="actionSave"
         android:text="Zapisz"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pictogramAddPath" />
+        app:layout_constraintTop_toBottomOf="@+id/pictogramAddPosition" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ActionButtionSelectImage"
@@ -76,12 +77,11 @@
         android:id="@+id/pictogramAddName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:hint="Podaj nazwę"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pictogramAddIcon" />
 
@@ -89,14 +89,25 @@
         android:id="@+id/pictogramAddPath"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:freezesText="false"
         android:hint="Podaj kod"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pictogramAddName" />
+
+    <EditText
+        android:id="@+id/pictogramAddPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Podaj pozycje"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pictogramAddPath" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

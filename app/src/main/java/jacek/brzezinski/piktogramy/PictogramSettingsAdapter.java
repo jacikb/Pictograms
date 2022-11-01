@@ -2,23 +2,21 @@ package jacek.brzezinski.piktogramy;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,6 +59,11 @@ public class PictogramSettingsAdapter extends BaseAdapter {
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
         EditText e_name = (EditText) view.findViewById(R.id.pictogramListName);
         Switch e_active = (Switch) view.findViewById(R.id.pictogramListActive);
+        ImageButton bt_edit = (ImageButton) view.findViewById(R.id.pictogramListEdit);
+
+        bt_edit.setTag("" + pictogramModel.getId());
+        bt_edit.setEnabled(!pictogramModel.isResource());
+        bt_edit.setVisibility(pictogramModel.isResource() ? View.INVISIBLE : View.VISIBLE);
 
         try {
             if (pictogramModel.isResource()) {
@@ -102,6 +105,16 @@ public class PictogramSettingsAdapter extends BaseAdapter {
             }
         });
 
+//        bt_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.w("EDIT ", pictogramModel.getName());
+//                        Intent intent = new Intent(PictogramSettingsActivity.this, PictogramAddActivity.class);
+//                        intent.putExtra("editId",312);
+//                        startActivity(intent);
+//                //DO SOMETHING! {RUN SOME FUNCTION ... DO CHECKS... ETC}
+//            }
+//        });
         return view;
     }
 }

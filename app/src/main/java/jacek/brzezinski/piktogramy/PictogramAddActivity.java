@@ -40,12 +40,13 @@ public class PictogramAddActivity extends AppCompatActivity {
     private ImageView imageView;
     private EditText editName;
     private EditText editPath;
+    private EditText editPosition;
     private FloatingActionButton actionButtonPlay;
-
+    private int editId = 0;
     private Uri audioUri;
     private Uri imageUri;
     private Bitmap imageBitmap;
-    private PictogramModel pictogramModel = new PictogramModel();
+    private PictogramModel pictogramModel = null;
 
     private MediaPlayer mp;
 
@@ -53,16 +54,36 @@ public class PictogramAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pictogram_add);
+        Intent data = getIntent();
+        editId = data.getIntExtra("editId", 0);
 
         databaseHelper = new DataBaseHelper(PictogramAddActivity.this);
         imageView = (ImageView) findViewById(R.id.pictogramAddIcon);
         editName = (EditText) findViewById(R.id.pictogramAddName);
         editPath = (EditText) findViewById(R.id.pictogramAddPath);
+        editPosition = (EditText) findViewById(R.id.pictogramAddPosition);
         actionButtonPlay = (FloatingActionButton) findViewById(R.id.ActionButtonPlay);
-        editName.setText(pictogramModel.getName());
-        editPath.setText(pictogramModel.getPath());
-
-
+        if (editId == 0) {
+            pictogramModel = new PictogramModel();
+            pictogramModel.setPosition(databaseHelper.getMaxPosition() + 1);
+        } else {
+            pictogramModel = databaseHelper.getById(editId);
+            editName.setText(pictogramModel.getName());
+            editPath.setText(pictogramModel.getPath());
+            imageUri = Uri.fromFile(new File(getFilesDir() + "/image/" + pictogramModel.getPath() + ".jpg"));
+            audioUri = Uri.fromFile(new File(getFilesDir() + "/audio/" + pictogramModel.getPath() + ".mp3"));
+            try {
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                imageBitmap = BitmapFactory.decodeStream(imageStream);
+                imageView.setImageBitmap(imageBitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(PictogramAddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+            actionButtonPlay.setEnabled(true);
+        }
+        editPosition.setText(Integer.toString(pictogramModel.getPosition()));
+        editPosition.setText(Integer.toString(editId));
     }
 
     public void actionPhotoFromFile(View view) {
@@ -128,7 +149,11 @@ public class PictogramAddActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
         }
-        databaseHelper.addOne(pictogramModel);
+        if (pictogramModel.getId() > 0) {
+            databaseHelper.addOne(pictogramModel);
+        } else {
+            databaseHelper.updateOne(pictogramModel);
+        }
         Toast.makeText(PictogramAddActivity.this, "Dodano nowy piktogram", Toast.LENGTH_LONG).show();
         finish();
     }

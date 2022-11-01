@@ -1,17 +1,13 @@
 package jacek.brzezinski.piktogramy;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.savedstate.Recreator;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -34,12 +30,16 @@ public class PictogramSettingsActivity extends AppCompatActivity {
         pictogramListView.setAdapter(customAdapter);
     }
 
+    public void actionEdit(View view) {
+        Log.w("EDIT ", view.getTag().toString());
+        Intent intent = new Intent(PictogramSettingsActivity.this, PictogramAddActivity.class);
+        intent.putExtra("editId", Integer.parseInt(view.getTag().toString()));
+        startActivity(intent);
+    }
+
+
     public void actionAdd(View view) {
         Intent intent = new Intent(PictogramSettingsActivity.this, PictogramAddActivity.class);
         startActivity(intent);
-//        PictogramModel pictogramModel = new PictogramModel();
-//        pictogramModel.setPath("p_tak");
-//        pictograms.add(pictogramModel);
-//        recreate();
     }
 }
