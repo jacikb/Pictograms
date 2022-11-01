@@ -23,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String P_COLUMN_ACTIVE = "ACTIVE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "pictogram.db", null, 3);
+        super(context, "pictogram.db", null, 4);
     }
 
     @Override
@@ -144,9 +144,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 String path = cursor.getString(2);
-                boolean resource = cursor.getInt(3) == 1;
+                Boolean resource = cursor.getInt(3) == 1;
                 int position = cursor.getInt(4);
-                boolean active = cursor.getInt(5) == 1;
+                Boolean active = cursor.getInt(5) == 1;
                 PictogramModel pictogramModel = new PictogramModel(id, name, path, resource, position, active);
                 returnList.add(pictogramModel);
             } while (cursor.moveToNext());

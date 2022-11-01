@@ -34,6 +34,8 @@ public class PictogramAddActivity extends AppCompatActivity {
     public static final int PICK_IMAGE_FILE = 10;
     public static final int PICK_AUDIO_FILE = 20;
 
+    DataBaseHelper databaseHelper;
+
     private ImageView imageView;
     private EditText editCode;
     private EditText editName;
@@ -50,6 +52,9 @@ public class PictogramAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pictogram_add);
+
+        databaseHelper = new DataBaseHelper(PictogramAddActivity.this);
+
         imageView = (ImageView) findViewById(R.id.pictogramAddIcon);
         editCode = (EditText) findViewById(R.id.editCode);
         editName = (EditText) findViewById(R.id.editName);
@@ -111,6 +116,8 @@ public class PictogramAddActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
         }
+        pictogramModel.setResource(false);
+        databaseHelper.addOne(pictogramModel);
     }
 
     public boolean saveFileTxt(String fileName, String mytext) {

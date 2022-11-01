@@ -2,6 +2,8 @@ package jacek.brzezinski.piktogramy;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.text.Layout;
 import android.util.Log;
@@ -20,11 +22,13 @@ public class PictogramListAdapter extends BaseAdapter {
     private static final String TAG = "CustomAdapter";
     Context context;
     int gridHeight;
+    String imageDir;
     List<PictogramModel> pictograms;
     LayoutInflater inflter;
 
     public PictogramListAdapter(Context applicationContext, int gridHeight, List<PictogramModel> pictograms) {
         this.context = applicationContext;
+        this.imageDir = context.getFilesDir() + "/image/";
         this.pictograms = pictograms;
         this.gridHeight = gridHeight;
         inflter = (LayoutInflater.from(applicationContext));
@@ -52,8 +56,19 @@ public class PictogramListAdapter extends BaseAdapter {
         ImageView icon = (ImageView) view.findViewById(R.id.icon); // get the reference of ImageView
 
         PictogramModel pictogramModel = pictograms.get(i);
-        //icon.setImageResource(MainActivity.getResource("drawable", pictogramModel.getPath()));
-        icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
+        try {
+            if (pictogramModel.isResource()) {
+                icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
+            } else {
+                String fileName = imageDir + pictogramModel.getPath() + ".jpg";
+                Log.w("CUSTOM", fileName);
+                Bitmap imageBitmap;
+                imageBitmap = BitmapFactory.decodeFile(fileName);
+                icon.setImageBitmap(imageBitmap);
+            }
+        } catch (Exception e) {
+            icon.setImageResource(R.drawable.no_foto);
+        }
         icon.getLayoutParams().height = gridHeight;
         icon.getLayoutParams().width = gridHeight;
         icon.requestLayout();
