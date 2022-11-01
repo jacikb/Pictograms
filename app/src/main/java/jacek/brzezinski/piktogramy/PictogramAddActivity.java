@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Locale;
 
 public class PictogramAddActivity extends AppCompatActivity {
     public static final int PICK_IMAGE_FILE = 10;
@@ -37,8 +38,8 @@ public class PictogramAddActivity extends AppCompatActivity {
     DataBaseHelper databaseHelper;
 
     private ImageView imageView;
-    private EditText editCode;
     private EditText editName;
+    private EditText editPath;
     private FloatingActionButton actionButtonPlay;
 
     private Uri audioUri;
@@ -54,14 +55,14 @@ public class PictogramAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pictogram_add);
 
         databaseHelper = new DataBaseHelper(PictogramAddActivity.this);
-
         imageView = (ImageView) findViewById(R.id.pictogramAddIcon);
-        editCode = (EditText) findViewById(R.id.editCode);
-        editName = (EditText) findViewById(R.id.editName);
+        editName = (EditText) findViewById(R.id.pictogramAddName);
+        editPath = (EditText) findViewById(R.id.pictogramAddPath);
         actionButtonPlay = (FloatingActionButton) findViewById(R.id.ActionButtonPlay);
-        pictogramModel.setPath("p_test");
         editName.setText(pictogramModel.getName());
-        editCode.setText(pictogramModel.getPath());
+        editPath.setText(pictogramModel.getPath());
+
+
     }
 
     public void actionPhotoFromFile(View view) {
@@ -91,11 +92,22 @@ public class PictogramAddActivity extends AppCompatActivity {
         String imageFileName;
         String audioFileName;
 
+        pictogramModel.setName(editName.getText().toString());
+        pictogramModel.setPath(editPath.getText().toString());
+        pictogramModel.setResource(false);
+        pictogramModel.setPosition(20);
+        pictogramModel.setActive(true);
+
+        if (pictogramModel.getPath().length() == 0) {
+            Toast.makeText(PictogramAddActivity.this, "Kod nie może być pusty!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         //Image
         try {
             imageFileName = pictogramModel.getPath() + ".jpg";
             copyFile(imageUri, getFilesDir() + "/image/", imageFileName);
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
@@ -108,7 +120,7 @@ public class PictogramAddActivity extends AppCompatActivity {
         try {
             audioFileName = pictogramModel.getPath() + ".mp3";
             copyFile(audioUri, getFilesDir() + "/audio/", audioFileName);
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
@@ -116,8 +128,9 @@ public class PictogramAddActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
         }
-        pictogramModel.setResource(false);
         databaseHelper.addOne(pictogramModel);
+        Toast.makeText(PictogramAddActivity.this, "Dodano nowy piktogram", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     public boolean saveFileTxt(String fileName, String mytext) {

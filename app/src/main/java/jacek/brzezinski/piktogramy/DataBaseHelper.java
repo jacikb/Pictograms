@@ -23,7 +23,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String P_COLUMN_ACTIVE = "ACTIVE";
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, "pictogram.db", null, 4);
+        super(context, "pictogram.db", null, 1);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Jeść", "p_jesc", true, 6);
         addOneOnCreate(db, pictogramModel);
-        pictogramModel.createNew("Kanapka", "p_kanapka", true,7);
+        pictogramModel.createNew("Kanapka", "p_kanapka", true, 7);
         addOneOnCreate(db, pictogramModel);
         pictogramModel.createNew("Owoce", "p_owoce", true, 8);
         addOneOnCreate(db, pictogramModel);

@@ -1,11 +1,13 @@
 package jacek.brzezinski.piktogramy;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +53,13 @@ public class PictogramSettingsAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint({"UseSwitchCompatOrMaterialCode", "ViewHolder"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         PictogramModel pictogramModel = pictograms.get(i);
-        view = inflter.inflate(R.layout.pictogram_list_item, null); // inflate the layout
+        view = inflter.inflate(R.layout.pictogram_list_item, null);
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
         EditText e_name = (EditText) view.findViewById(R.id.pictogramListName);
-//        TextView editPath = (TextView) view.findViewById(R.id.pictogramListAPath);
         Switch e_active = (Switch) view.findViewById(R.id.pictogramListActive);
 
         try {
@@ -65,6 +67,7 @@ public class PictogramSettingsAdapter extends BaseAdapter {
                 icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
             } else {
                 String fileName = imageDir + pictogramModel.getPath() + ".jpg";
+                Log.w("********** CUSTOM IMAGE", fileName);
                 Bitmap imageBitmap;
                 imageBitmap = BitmapFactory.decodeFile(fileName);
                 icon.setImageBitmap(imageBitmap);
