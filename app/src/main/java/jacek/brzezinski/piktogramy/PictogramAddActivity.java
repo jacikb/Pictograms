@@ -46,7 +46,10 @@ public class PictogramAddActivity extends AppCompatActivity {
     private Uri audioUri;
     private Uri imageUri;
     private Bitmap imageBitmap;
-    private PictogramModel pictogramModel = null;
+    private Boolean audioChanged = false;
+    private Boolean imageChanged = false;
+
+    private PictogramModel pictogramModel;
 
     private MediaPlayer mp;
 
@@ -56,17 +59,17 @@ public class PictogramAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pictogram_add);
         Intent data = getIntent();
         editId = data.getIntExtra("editId", 0);
-
+        Toast.makeText(PictogramAddActivity.this, "onCreate", Toast.LENGTH_LONG).show();
         databaseHelper = new DataBaseHelper(PictogramAddActivity.this);
         imageView = (ImageView) findViewById(R.id.pictogramAddIcon);
         editName = (EditText) findViewById(R.id.pictogramAddName);
         editPath = (EditText) findViewById(R.id.pictogramAddPath);
         editPosition = (EditText) findViewById(R.id.pictogramAddPosition);
         actionButtonPlay = (FloatingActionButton) findViewById(R.id.ActionButtonPlay);
-        if (editId == 0) {
-            pictogramModel = new PictogramModel();
-            pictogramModel.setPosition(databaseHelper.getMaxPosition() + 1);
-        } else {
+        audioChanged = false;
+        imageChanged = false;
+
+        if (editId > 0) {
             pictogramModel = databaseHelper.getById(editId);
             editName.setText(pictogramModel.getName());
             editPath.setText(pictogramModel.getPath());
@@ -81,6 +84,11 @@ public class PictogramAddActivity extends AppCompatActivity {
                 Toast.makeText(PictogramAddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
             actionButtonPlay.setEnabled(true);
+        } else {
+            pictogramModel = new PictogramModel();
+            pictogramModel.setPosition(databaseHelper.getMaxPosition() + 1);
+            pictogramModel.setResource(false);
+            pictogramModel.setActive(true);
         }
         editPosition.setText(Integer.toString(pictogramModel.getPosition()));
         editPosition.setText(Integer.toString(editId));
@@ -115,9 +123,7 @@ public class PictogramAddActivity extends AppCompatActivity {
 
         pictogramModel.setName(editName.getText().toString());
         pictogramModel.setPath(editPath.getText().toString());
-        pictogramModel.setResource(false);
-        pictogramModel.setPosition(20);
-        pictogramModel.setActive(true);
+        pictogramModel.setPosition(Integer.parseInt(editPosition.getText().toString()));
 
         if (pictogramModel.getPath().length() == 0) {
             Toast.makeText(PictogramAddActivity.this, "Kod nie może być pusty!", Toast.LENGTH_LONG).show();
@@ -125,36 +131,41 @@ public class PictogramAddActivity extends AppCompatActivity {
         }
 
         //Image
-        try {
-            imageFileName = pictogramModel.getPath() + ".jpg";
-            copyFile(imageUri, getFilesDir() + "/image/", imageFileName);
+        if (imageChanged) {
+            try {
+                imageFileName = pictogramModel.getPath() + ".jpg";
+                copyFile(imageUri, getFilesDir() + "/image/", imageFileName);
 //            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
+            }
         }
 
         //Audio
-        try {
-            audioFileName = pictogramModel.getPath() + ".mp3";
-            copyFile(audioUri, getFilesDir() + "/audio/", audioFileName);
+        if (audioChanged) {
+            try {
+                audioFileName = pictogramModel.getPath() + ".mp3";
+                copyFile(audioUri, getFilesDir() + "/audio/", audioFileName);
 //            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(PictogramAddActivity.this, "error " + e.toString(), Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(PictogramAddActivity.this, "Something went wrong 2 " + audioUri.getPath(), Toast.LENGTH_LONG).show();
+            }
         }
         if (pictogramModel.getId() > 0) {
-            databaseHelper.addOne(pictogramModel);
-        } else {
             databaseHelper.updateOne(pictogramModel);
+            Toast.makeText(PictogramAddActivity.this, "Zaktualizowano piktogram " + pictogramModel.getName(), Toast.LENGTH_LONG).show();
+        } else {
+            databaseHelper.addOne(pictogramModel);
+            Toast.makeText(PictogramAddActivity.this, "Dodano nowy piktogram " + pictogramModel.getName(), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(PictogramAddActivity.this, "Dodano nowy piktogram", Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -183,6 +194,7 @@ public class PictogramAddActivity extends AppCompatActivity {
                     imageBitmap = BitmapFactory.decodeStream(imageStream);
                     imageView.setImageBitmap(imageBitmap);
                     Toast.makeText(this, "RESULT FILE " + Integer.toString(resultCode), Toast.LENGTH_SHORT).show();
+                    imageChanged = true;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     Toast.makeText(PictogramAddActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
@@ -192,6 +204,7 @@ public class PictogramAddActivity extends AppCompatActivity {
 //                final Uri audioUri = ;
                 audioUri = data.getData();
                 actionButtonPlay.setEnabled(true);
+                audioChanged = true;
             }
         }
     }
