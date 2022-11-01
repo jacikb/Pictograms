@@ -16,14 +16,14 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter {
+public class PictogramListAdapter extends BaseAdapter {
     private static final String TAG = "CustomAdapter";
     Context context;
     int gridHeight;
     List<PictogramModel> pictograms;
     LayoutInflater inflter;
 
-    public CustomAdapter(Context applicationContext, int gridHeight, List<PictogramModel> pictograms) {
+    public PictogramListAdapter(Context applicationContext, int gridHeight, List<PictogramModel> pictograms) {
         this.context = applicationContext;
         this.pictograms = pictograms;
         this.gridHeight = gridHeight;
@@ -52,12 +52,11 @@ public class CustomAdapter extends BaseAdapter {
         ImageView icon = (ImageView) view.findViewById(R.id.icon); // get the reference of ImageView
 
         PictogramModel pictogramModel = pictograms.get(i);
-        icon.setImageResource(MainActivity.getResource("drawable", pictogramModel.getPath()));
+        //icon.setImageResource(MainActivity.getResource("drawable", pictogramModel.getPath()));
+        icon.setImageResource(MainActivity.getResourceImage(pictogramModel));
         icon.getLayoutParams().height = gridHeight;
         icon.getLayoutParams().width = gridHeight;
         icon.requestLayout();
-
-
 
 
         return view;

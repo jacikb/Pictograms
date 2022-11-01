@@ -11,12 +11,10 @@ import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
@@ -56,26 +54,20 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
         ShowPictograms(databaseHelper);
 
-        // implement setOnItemClickListener event on GridView
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String path = pictograms.get(position).getPath();
-                //111
+                PictogramModel pictogramModel = pictograms.get(position);
                 try {
                     if (mp.isPlaying()) {
                         mp.stop();
                         mp.release();
                     }
-                    mp = MediaPlayer.create(MainActivity.this, getResource("raw", path));
+                    mp = MediaPlayer.create(MainActivity.this, getResourceAudio(pictogramModel));
                     mp.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // set an Intent to Another Activity
-//                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-//                intent.putExtra("image", logos[position]); // put image data in Intent
-//                startActivity(intent); // start Intent
             }
         });
     }
@@ -145,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
         pictograms = databaseHelper.getAll(true);
 
         // Create an object of CustomAdapter and set Adapter to GirdView
-        CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, (gridSize * (int) displayMetrics.density), pictograms);
-        simpleGrid.setAdapter(customAdapter);
+        PictogramListAdapter pictogramListAdapter = new PictogramListAdapter(MainActivity.this, (gridSize * (int) displayMetrics.density), pictograms);
+        simpleGrid.setAdapter(pictogramListAdapter);
 
     }
 
@@ -165,5 +157,21 @@ public class MainActivity extends AppCompatActivity {
      */
     public static int getResource(String resName, String name) {
         return resources.getIdentifier(name, resName, packageName);
+    }
+
+    /**
+     * @param pictogramModel
+     * @return
+     */
+    public static int getResourceImage(PictogramModel pictogramModel) {
+        return resources.getIdentifier(pictogramModel.getPath(), "drawable", packageName);
+    }
+
+    /**
+     * @param pictogramModel
+     * @return
+     */
+    public static int getResourceAudio(PictogramModel pictogramModel) {
+        return resources.getIdentifier(pictogramModel.getPath(), "raw", packageName);
     }
 }

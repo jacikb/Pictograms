@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:enabled="false"
+        android:enabled="true"
         android:onClick="actionSave"
         android:text="Zapisz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNewPath" />
+        app:layout_constraintTop_toBottomOf="@+id/editCode" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ActionButtionSelectImage"
@@ -74,7 +74,7 @@
         app:srcCompat="@android:drawable/progress_horizontal" />
 
     <EditText
-        android:id="@+id/editNewName"
+        android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pictogramAddIcon" />
 
     <EditText
-        android:id="@+id/editNewPath"
+        android:id="@+id/editCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -98,6 +98,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNewName" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
