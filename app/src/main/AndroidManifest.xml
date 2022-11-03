@@ -27,7 +27,8 @@
             android:name=".PictogramSettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_pictograms"
-            android:parentActivityName=".MainActivity" /> <!-- <service -->
+            android:parentActivityName=".MainActivity" />
+        <!-- <service -->
         <!-- android:name=".BatteryReceiver" -->
         <!-- android:exported="false" > -->
         <!-- </service> -->
