@@ -3,12 +3,15 @@
     <PreferenceCategory app:title="@string/settings_main_header">
 
         <EditTextPreference
-            app:key="signature"
+            app:key="owner"
             app:title="@string/signature_title"
             app:useSimpleSummaryProvider="true" />
-
+        <EditTextPreference
+            app:key="phone"
+            app:title="@string/phone"
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
-            app:defaultValue="2"
+            app:defaultValue="180"
             app:entries="@array/size_entries"
             app:entryValues="@array/size_values"
             app:key="grid_size"

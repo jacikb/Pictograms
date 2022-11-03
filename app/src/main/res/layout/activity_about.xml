@@ -50,13 +50,13 @@
         android:layout_alignParentLeft="false"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/about_author_name"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/aboutTextViewAuthortel"
+        android:id="@+id/aboutTextViewPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/aboutTextViewAuthorName"
@@ -66,7 +66,7 @@
         android:layout_marginLeft="1dp"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="@string/about_author_tel"
+        android:text="@string/about_author_phone"
         android:textSize="20sp" />
 
 </RelativeLayout>

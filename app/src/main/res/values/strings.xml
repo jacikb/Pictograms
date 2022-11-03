@@ -31,8 +31,9 @@
     <string name="about_title">Piktogramy Pawła Brzezińskiego</string>
     <string name="about_author">Autor:</string>
     <string name="about_author_name">Jacek Brzeziński</string>
-    <string name="about_author_tel">Znalazcę proszę o kontakt \n pod numerem 737 456 220</string>
+    <string name="about_author_phone">Znalazcę proszę o kontakt \n pod numerem </string>
     <string name="Zapisz">buttonNewIconSave</string>
     <string name="pick_image_intent_text">Select image</string>
+    <string name="phone">Telefon</string>
 
 </resources>
