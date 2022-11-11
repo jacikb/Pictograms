@@ -14,7 +14,7 @@
         android:backgroundTintMode="add">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/pictogramListIcon"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
@@ -26,17 +26,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/pictogramListUp"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/ic_action_up"
+            android:onClick="actionMoveUp"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pictogramListIcon"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/pictogramListName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text=""
-            app:layout_constraintStart_toEndOf="@+id/icon"
+        <ImageButton
+            android:id="@+id/pictogramListDown"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/ic_action_down"
+            android:onClick="actionMoveDown"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pictogramListUp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
@@ -44,11 +59,12 @@
             android:layout_width="40dp"
             android:layout_height="0dp"
 
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pictogramListName"
+            app:layout_constraintStart_toEndOf="@+id/pictogramListDown"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
 
         <ImageButton
             android:id="@+id/pictogramListEdit"
@@ -56,11 +72,13 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/ic_action_edit"
-            android:onClick="actionEdit"
+            android:onClick="actionUp"
             android:scaleType="fitCenter"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pictogramListActive"
             app:layout_constraintTop_toTopOf="parent" />
 

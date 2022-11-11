@@ -15,7 +15,7 @@ public class PictogramSettingsActivity extends AppCompatActivity {
     private static final String TAG = "PictogramSettingsActivity";
     ListView pictogramListView;
     List<PictogramModel> pictograms;
-    ArrayAdapter customerArrayAdapter;
+    PictogramSettingsAdapter customAdapter;
     DataBaseHelper databaseHelper;
 
     @Override
@@ -25,9 +25,33 @@ public class PictogramSettingsActivity extends AppCompatActivity {
         databaseHelper = new DataBaseHelper(super.getBaseContext());
         pictogramListView = (ListView) findViewById(R.id.pictogramListView); // init GridView
         pictograms = databaseHelper.getAll(false);
-
-        PictogramSettingsAdapter customAdapter = new PictogramSettingsAdapter(PictogramSettingsActivity.this, databaseHelper, pictograms);
+        customAdapter = new PictogramSettingsAdapter(PictogramSettingsActivity.this, databaseHelper, pictograms);
         pictogramListView.setAdapter(customAdapter);
+    }
+
+    public void actionMoveUp(View view) {
+        Log.w("ACTION", "---------------------------------------------");
+        Log.w("ACTION", "UP" + view.getTag().toString());
+        int id = Integer.parseInt(view.getTag().toString());
+
+        for (int i = 0; i < pictograms.size(); i++) {
+            PictogramModel pictogram = pictograms.get(i);
+            if (pictogram.getId() == id && i > 0) {
+                changePosition(pictogram, pictograms.get(i - 1));
+            }
+        }
+    }
+
+    public void actionMoveDown(View view) {
+        Log.w("ACTION", "---------------------------------------------");
+        Log.w("ACTION", "DOWN " + view.getTag().toString());
+        int id = Integer.parseInt(view.getTag().toString());
+        for (int i = 0; i < pictograms.size(); i++) {
+            PictogramModel pictogram = pictograms.get(i);
+            if (pictogram.getId() == id && i < pictograms.size() - 1) {
+                changePosition(pictogram, pictograms.get(i + 1));
+            }
+        }
     }
 
     public void actionEdit(View view) {
@@ -41,5 +65,15 @@ public class PictogramSettingsActivity extends AppCompatActivity {
     public void actionAdd(View view) {
         Intent intent = new Intent(PictogramSettingsActivity.this, PictogramAddActivity.class);
         startActivity(intent);
+    }
+
+    private void changePosition(PictogramModel pictogramA, PictogramModel pictogramB) {
+        int position;
+        position = pictogramA.getPosition();
+        pictogramA.setPosition(pictogramB.getPosition());
+        pictogramB.setPosition(position);
+        databaseHelper.updateOne(pictogramA);
+        databaseHelper.updateOne(pictogramB);
+        recreate();
     }
 }

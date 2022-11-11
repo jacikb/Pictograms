@@ -2,12 +2,10 @@ package jacek.brzezinski.piktogramy;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,11 +54,19 @@ public class PictogramSettingsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         PictogramModel pictogramModel = pictograms.get(i);
         view = inflter.inflate(R.layout.pictogram_list_item, null);
-        ImageView icon = (ImageView) view.findViewById(R.id.icon);
-        EditText e_name = (EditText) view.findViewById(R.id.pictogramListName);
+        ImageView icon = (ImageView) view.findViewById(R.id.pictogramListIcon);
+        //EditText e_name = (EditText) view.findViewById(R.id.pictogramListName);
         Switch e_active = (Switch) view.findViewById(R.id.pictogramListActive);
+        ImageButton bt_up = (ImageButton) view.findViewById(R.id.pictogramListUp);
+        ImageButton bt_down = (ImageButton) view.findViewById(R.id.pictogramListDown);
         ImageButton bt_edit = (ImageButton) view.findViewById(R.id.pictogramListEdit);
 
+        bt_up.setVisibility(i > 0 ? View.VISIBLE : View.INVISIBLE);
+        bt_down.setVisibility(i < getCount() - 1 ? View.VISIBLE : View.INVISIBLE);
+
+        bt_down.setEnabled(i < getCount() - 1);
+        bt_up.setTag("" + pictogramModel.getId());
+        bt_down.setTag("" + pictogramModel.getId());
         bt_edit.setTag("" + pictogramModel.getId());
         bt_edit.setEnabled(!pictogramModel.isResource());
         bt_edit.setVisibility(pictogramModel.isResource() ? View.INVISIBLE : View.VISIBLE);
@@ -78,7 +84,7 @@ public class PictogramSettingsAdapter extends BaseAdapter {
             icon.setImageResource(R.drawable.no_foto);
         }
 
-        e_name.setText(pictogramModel.getName());
+        //e_name.setText(pictogramModel.getName());
         e_active.setChecked(pictogramModel.isActive());
         e_active.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -87,23 +93,23 @@ public class PictogramSettingsAdapter extends BaseAdapter {
 
             }
         });
-        e_name.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                pictogramModel.setName(s.toString());
-                dataBaseHelper.updateOne(pictogramModel);
-            }
-        });
+//        e_name.addTextChangedListener(new TextWatcher() {
+//
+//            public void afterTextChanged(Editable s) {
+//
+//
+//            }
+//
+//            public void beforeTextChanged(CharSequence s, int start,
+//                                          int count, int after) {
+//            }
+//
+//            public void onTextChanged(CharSequence s, int start,
+//                                      int before, int count) {
+//                pictogramModel.setName(s.toString());
+//                dataBaseHelper.updateOne(pictogramModel);
+//            }
+//        });
 
 //        bt_edit.setOnClickListener(new View.OnClickListener() {
 //            @Override

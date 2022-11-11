@@ -138,9 +138,10 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int columns = (int) (dpWidth / gridSize);
         // simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
         //1024 or 600
-        simpleGrid.setNumColumns((int) (dpWidth / gridSize));
+        simpleGrid.setNumColumns(columns);
         pictograms = databaseHelper.getAll(true);
 
         // Create an object of CustomAdapter and set Adapter to GirdView
