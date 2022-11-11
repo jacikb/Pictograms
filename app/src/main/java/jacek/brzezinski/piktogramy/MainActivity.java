@@ -7,11 +7,13 @@ package jacek.brzezinski.piktogramy;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     GridView simpleGrid;
-    public int gridSize = 150;
+    public int gridColumns = 8;
     ArrayList<Integer> logos = new ArrayList<Integer>();
     ArrayList<Integer> audios = new ArrayList<Integer>();
     List<PictogramModel> pictograms;
@@ -134,27 +136,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ShowPictograms(DataBaseHelper dataBaseHelper) {
+        int columns;
         updateFromPreferences();
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int columns = (int) (dpWidth / gridSize);
-        // simpleGrid.setNumColumns((int) (dpWidth / (120 + (gridSize * 40))));
-        //1024 or 600
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            columns = gridColumns;
+        } else {
+            columns = (int) (gridColumns / 1.4);
+        }
+        int gridSize = (int) (displayMetrics.widthPixels / columns);
         simpleGrid.setNumColumns(columns);
         pictograms = databaseHelper.getAll(true);
 
         // Create an object of CustomAdapter and set Adapter to GirdView
-        PictogramListAdapter pictogramListAdapter = new PictogramListAdapter(MainActivity.this, (gridSize * (int) displayMetrics.density), pictograms);
+        PictogramListAdapter pictogramListAdapter = new PictogramListAdapter(MainActivity.this, gridSize, pictograms);
         simpleGrid.setAdapter(pictogramListAdapter);
 
     }
 
     public void updateFromPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        gridSize = Integer.parseInt(prefs.getString("grid_size", "140"));
-        if (gridSize < 100 || gridSize > 300) {
-            gridSize = 140;
+        gridColumns = Integer.parseInt(prefs.getString("grid_columns", "6"));
+        if (gridColumns < 3 || gridColumns > 8) {
+            gridColumns = 6;
         }
     }
 

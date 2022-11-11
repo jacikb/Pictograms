@@ -11,10 +11,10 @@
             app:title="@string/phone"
             app:useSimpleSummaryProvider="true" />
         <ListPreference
-            app:defaultValue="180"
+            app:defaultValue="6"
             app:entries="@array/size_entries"
             app:entryValues="@array/size_values"
-            app:key="grid_size"
+            app:key="grid_columns"
             app:title="@string/size_title"
             app:useSimpleSummaryProvider="true" />
 
