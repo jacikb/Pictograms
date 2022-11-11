@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jacek.brzezinski.piktogramy">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Piktogramy">
         <activity
-            android:name=".PictogramSettingsActivity"
-            android:label="@string/title_activity_pictograms"
+            android:name=".PictogramAddActivity"
             android:exported="false"
+            android:parentActivityName=".PictogramSettingsActivity" />
+        <activity
+            android:name=".PictogramSettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_pictograms"
             android:parentActivityName=".MainActivity" />
         <!-- <service -->
         <!-- android:name=".BatteryReceiver" -->

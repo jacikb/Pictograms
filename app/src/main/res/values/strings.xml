@@ -28,8 +28,12 @@
 
 
     <!-- Sync Preferences -->
-    <string name="about_title">Program napisany dla Pawła</string>
+    <string name="about_title">Piktogramy Pawła Brzezińskiego</string>
     <string name="about_author">Autor:</string>
     <string name="about_author_name">Jacek Brzeziński</string>
+    <string name="about_author_phone">Znalazcę proszę o kontakt \n z numerem </string>
+    <string name="Zapisz">buttonNewIconSave</string>
+    <string name="pick_image_intent_text">Select image</string>
+    <string name="phone">Telefon</string>
 
 </resources>

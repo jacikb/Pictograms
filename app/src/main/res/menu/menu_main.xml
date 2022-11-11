@@ -6,7 +6,7 @@
         android:id="@+id/action_battery_charging"
         android:icon="@drawable/ic_charging"
         android:title="@string/action_battery_charging"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_battery_percent"
         android:title="@string/action_battery"

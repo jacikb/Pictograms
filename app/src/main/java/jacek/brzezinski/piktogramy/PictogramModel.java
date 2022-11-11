@@ -11,14 +11,16 @@ public class PictogramModel {
     private int id;
     private String name;
     private String path;
+    private Boolean resource;
     private int position;
     private Boolean isActive;
 
     //constructor
-    public PictogramModel(int id, String name, String path, int position, Boolean isActive) {
+    public PictogramModel(int id, String name, String path, Boolean resource, int position, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.path = path;
+        this.resource = resource;
         this.position = position;
         this.isActive = isActive;
     }
@@ -26,10 +28,11 @@ public class PictogramModel {
     public PictogramModel() {
     }
 
-    public void createNew(String name, String path, int position) {
+    public void createNew(String name, String path, Boolean resource, int position) {
         id = -1;
         this.name = name;
         this.path = path;
+        this.resource = resource;
         this.position = position;
         this.isActive = true;
     }
@@ -38,11 +41,12 @@ public class PictogramModel {
     @Override
     public String toString() {
         return "CustomerModel{" +
-                "id=" + id +
-                ", name='" + name + "'" +
-                ", path='" + path + "'" +
-                ", position=" + position +
-                ", isActive=" + (isActive ? 1 : 0) +
+                "id=" + this.id +
+                ", name='" + this.name + "'" +
+                ", path='" + this.path + "'" +
+                ", isResource='" + (this.resource ? "1" : "0") + "'" +
+                ", position=" + this.position +
+                ", isActive=" + (this.isActive ? 1 : 0) +
                 '}';
     }
 
@@ -68,6 +72,14 @@ public class PictogramModel {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Boolean isResource() {
+        return resource;
+    }
+
+    public void setResource(Boolean resource) {
+        this.resource = resource;
     }
 
     public int getPosition() {
