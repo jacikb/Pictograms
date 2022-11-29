@@ -18,6 +18,7 @@ public class PictogramListAdapter extends BaseAdapter {
     String imageDir;
     List<PictogramModel> pictograms;
     LayoutInflater inflter;
+    DataBaseHelper databaseHelper;
 
     public PictogramListAdapter(Context applicationContext, int gridHeight, List<PictogramModel> pictograms) {
         this.context = applicationContext;
@@ -25,6 +26,7 @@ public class PictogramListAdapter extends BaseAdapter {
         this.pictograms = pictograms;
         this.gridHeight = gridHeight;
         inflter = (LayoutInflater.from(applicationContext));
+        databaseHelper = new DataBaseHelper(applicationContext);
     }
 
     @Override
@@ -64,7 +66,6 @@ public class PictogramListAdapter extends BaseAdapter {
         icon.getLayoutParams().height = gridHeight;
         icon.getLayoutParams().width = gridHeight;
         icon.requestLayout();
-
 
         return view;
     }

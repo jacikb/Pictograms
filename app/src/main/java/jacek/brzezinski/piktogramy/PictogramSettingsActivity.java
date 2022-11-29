@@ -30,8 +30,6 @@ public class PictogramSettingsActivity extends AppCompatActivity {
     }
 
     public void actionMoveUp(View view) {
-        Log.w("ACTION", "---------------------------------------------");
-        Log.w("ACTION", "UP" + view.getTag().toString());
         int id = Integer.parseInt(view.getTag().toString());
 
         for (int i = 0; i < pictograms.size(); i++) {
@@ -43,8 +41,6 @@ public class PictogramSettingsActivity extends AppCompatActivity {
     }
 
     public void actionMoveDown(View view) {
-        Log.w("ACTION", "---------------------------------------------");
-        Log.w("ACTION", "DOWN " + view.getTag().toString());
         int id = Integer.parseInt(view.getTag().toString());
         for (int i = 0; i < pictograms.size(); i++) {
             PictogramModel pictogram = pictograms.get(i);
