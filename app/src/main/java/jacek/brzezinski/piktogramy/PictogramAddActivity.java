@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class PictogramAddActivity extends AppCompatActivity {
@@ -38,6 +42,8 @@ public class PictogramAddActivity extends AppCompatActivity {
     DataBaseHelper databaseHelper;
 
     private ImageView imageView;
+    private Spinner listParent;
+    List<PictogramModel> treeParent;
     private EditText editName;
     private EditText editPath;
     private EditText editPosition;
@@ -48,6 +54,8 @@ public class PictogramAddActivity extends AppCompatActivity {
     private Bitmap imageBitmap;
     private Boolean audioChanged = false;
     private Boolean imageChanged = false;
+
+//    List<StringWithTag> treeParent = new ArrayList<StringWithTag>();
 
     private PictogramModel pictogramModel;
 
@@ -62,17 +70,34 @@ public class PictogramAddActivity extends AppCompatActivity {
         Toast.makeText(PictogramAddActivity.this, "onCreate", Toast.LENGTH_LONG).show();
         databaseHelper = new DataBaseHelper(PictogramAddActivity.this);
         imageView = (ImageView) findViewById(R.id.pictogramAddIcon);
+        listParent = (Spinner) findViewById(R.id.pictogramAddParent);
         editName = (EditText) findViewById(R.id.pictogramAddName);
         editPath = (EditText) findViewById(R.id.pictogramAddPath);
         editPosition = (EditText) findViewById(R.id.pictogramAddPosition);
         actionButtonPlay = (FloatingActionButton) findViewById(R.id.ActionButtonPlay);
+        PictogramModel pictogramRoot = new PictogramModel(0, 0, 0, "Katalog główny", "", false, 0, true);
         audioChanged = false;
         imageChanged = false;
+        treeParent = new ArrayList<PictogramModel>();
+        treeParent.add(pictogramRoot);
+        treeParent.addAll(databaseHelper.getTree(0));
+        ArrayAdapter<PictogramModel> treeParentAdapter = new ArrayAdapter<PictogramModel>(this, android.R.layout.simple_spinner_item, treeParent);
+        listParent.setAdapter(treeParentAdapter);
 
         if (editId > 0) {
             pictogramModel = databaseHelper.getById(editId);
             editName.setText(pictogramModel.getName());
             editPath.setText(pictogramModel.getPath());
+            int position = 0;
+            int parentId = pictogramModel.getParent();
+            for (int i = 0; i < treeParent.size(); i++) {
+                if (treeParent.get(i).getId() == parentId) {
+                    position = i;
+                }
+            }
+            listParent.setSelection(position);
+            //listParent.setSelection(treeParentAdapter.getPosition(pictogramModel));
+
             imageUri = Uri.fromFile(new File(getFilesDir() + "/image/" + pictogramModel.getPath() + ".jpg"));
             audioUri = Uri.fromFile(new File(getFilesDir() + "/audio/" + pictogramModel.getPath() + ".mp3"));
             try {
@@ -93,6 +118,12 @@ public class PictogramAddActivity extends AppCompatActivity {
         editPosition.setText(Integer.toString(pictogramModel.getPosition()));
         editPosition.setText(Integer.toString(editId));
     }
+
+
+//    public void onItemSelected(AdapterView<?> parant, View v, int pos, long id) {
+//        StringWithTag s = (StringWithTag) parant.getItemAtPosition(pos);
+//        Object tag = s.tag;
+//    }
 
     public void actionPhotoFromFile(View view) {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -120,7 +151,8 @@ public class PictogramAddActivity extends AppCompatActivity {
 
         String imageFileName;
         String audioFileName;
-
+        PictogramModel parent = (PictogramModel) listParent.getSelectedItem();
+        pictogramModel.setParent(parent.getId());
         pictogramModel.setName(editName.getText().toString());
         pictogramModel.setPath(editPath.getText().toString());
         pictogramModel.setPosition(Integer.parseInt(editPosition.getText().toString()));

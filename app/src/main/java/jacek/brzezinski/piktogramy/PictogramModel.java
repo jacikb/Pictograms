@@ -7,8 +7,17 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class PictogramModel {
+    public static final int TREE_ROOT = 0;
+
+    public static final int ROLE_PICTOGRAM = 0;
+    public static final int ROLE_DIR = 1;
+    public static final int ROLE_BACK = -1;
+
     private int id;
+    private int parent;
+    private int role;
     private String name;
     private String path;
     private Boolean resource;
@@ -16,8 +25,10 @@ public class PictogramModel {
     private Boolean isActive;
 
     //constructor
-    public PictogramModel(int id, String name, String path, Boolean resource, int position, Boolean isActive) {
+    public PictogramModel(int id, int parent, int role, String name, String path, Boolean resource, int position, Boolean isActive) {
         this.id = id;
+        this.parent = parent;
+        this.role = role;
         this.name = name;
         this.path = path;
         this.resource = resource;
@@ -28,8 +39,10 @@ public class PictogramModel {
     public PictogramModel() {
     }
 
-    public void createNew(String name, String path, Boolean resource, int position) {
+    public void createNew(int parent, String name, String path, Boolean resource, int position) {
         id = -1;
+        this.parent = parent;
+        this.role = PictogramModel.ROLE_PICTOGRAM;
         this.name = name;
         this.path = path;
         this.resource = resource;
@@ -37,17 +50,18 @@ public class PictogramModel {
         this.isActive = true;
     }
 
+    public PictogramModel setRoleBack(int parent) {
+        this.parent = parent;
+        this.role = PictogramModel.ROLE_BACK;
+        this.resource = true;
+        this.path = "p_back";
+        this.name = "Back";
+        return this;
+    }
 
     @Override
     public String toString() {
-        return "CustomerModel{" +
-                "id=" + this.id +
-                ", name='" + this.name + "'" +
-                ", path='" + this.path + "'" +
-                ", isResource='" + (this.resource ? "1" : "0") + "'" +
-                ", position=" + this.position +
-                ", isActive=" + (this.isActive ? 1 : 0) +
-                '}';
+        return this.name + (this.path.length() > 0 ? " (" + this.path + ")" : "");
     }
 
     public int getId() {
@@ -56,6 +70,22 @@ public class PictogramModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public String getName() {

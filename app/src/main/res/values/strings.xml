@@ -9,6 +9,7 @@
     <string name="action_settings">Ustawienia</string>
     <string name="action_pictograms">Piktogramy</string>
     <string name="action_about">O programie</string>
+    <string name="action_reset">Reset</string>
     <string name="action_battery"> </string>
     <string name="action_battery_charging">Charging</string>
 

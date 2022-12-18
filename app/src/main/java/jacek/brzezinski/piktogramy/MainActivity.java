@@ -4,6 +4,7 @@ package jacek.brzezinski.piktogramy;
  * example Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
  */
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -21,8 +22,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mp;
     private static Resources resources;
     private static String packageName;
+    public static int viewParent = 0;
 
 
     GridView simpleGrid;
@@ -62,20 +67,40 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PictogramModel pictogramModel = pictograms.get(position);
-                try {
-                    if (mp.isPlaying()) {
-                        mp.stop();
-                        mp.release();
-                    }
-                    if (pictogramModel.isResource()) {
-                        mp = MediaPlayer.create(MainActivity.this, getResourceAudio(pictogramModel));
-                    } else {
-                        File audioFile = (new File(getFilesDir() + "/audio/" + pictogramModel.getPath() + ".mp3"));
-                        mp = MediaPlayer.create(MainActivity.this, Uri.fromFile(audioFile));
-                    }
-                    mp.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                switch (pictogramModel.getRole()) {
+                    case PictogramModel.ROLE_DIR:
+                        viewParent = pictogramModel.getId();
+                        ShowPictograms(databaseHelper);
+                        break;
+
+                    case PictogramModel.ROLE_BACK:
+                        viewParent = PictogramModel.TREE_ROOT;
+                        ShowPictograms(databaseHelper);
+                        break;
+
+                    case PictogramModel.ROLE_PICTOGRAM:
+                    default:
+                        if (databaseHelper.getTree(pictogramModel.getId()).size() > 0) {
+                            viewParent = pictogramModel.getId();
+                            ShowPictograms(databaseHelper);
+                        } else {
+                            try {
+                                if (mp.isPlaying()) {
+                                    mp.stop();
+                                    mp.release();
+                                }
+                                if (pictogramModel.isResource()) {
+                                    mp = MediaPlayer.create(MainActivity.this, getResourceAudio(pictogramModel));
+                                } else {
+                                    File audioFile = (new File(getFilesDir() + "/audio/" + pictogramModel.getPath() + ".mp3"));
+                                    mp = MediaPlayer.create(MainActivity.this, Uri.fromFile(audioFile));
+                                }
+                                mp.start();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
                 }
             }
         });
@@ -100,6 +125,26 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_about:
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.action_reset:
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setTitle("Resetowanie aplikacji");
+                alert.setMessage("Na pewno chcesz przywrócić ikony do stanu początkowego?");
+                alert.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseHelper.reCreate();
+                        ShowPictograms(databaseHelper);
+                    }
+                });
+                alert.setNegativeButton("Nie", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ShowPictograms(databaseHelper);
+                    }
+                });
+                alert.create().show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -150,12 +195,17 @@ public class MainActivity extends AppCompatActivity {
         }
         int gridSize = (int) (displayMetrics.widthPixels / columns);
         simpleGrid.setNumColumns(columns);
-        pictograms = databaseHelper.getAll(true);
+        //pictograms = databaseHelper.getAll(true);
+        pictograms = databaseHelper.getTree(viewParent);
+        if (viewParent > 0) {
+            //PictogramModel pictogramModelBack = new PictogramModel(-1, 0, PictogramModel.ROLE_BACK, "Back", "p_back", true, 0, true);
+            PictogramModel pictogramModelBack = new PictogramModel();
+            pictograms.add(0, pictogramModelBack.setRoleBack(0));
+        }
 
         // Create an object of CustomAdapter and set Adapter to GirdView
         PictogramListAdapter pictogramListAdapter = new PictogramListAdapter(MainActivity.this, gridSize, pictograms);
         simpleGrid.setAdapter(pictogramListAdapter);
-
     }
 
     public void updateFromPreferences() {

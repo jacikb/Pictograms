@@ -73,17 +73,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/progress_horizontal" />
 
+    <Spinner
+        android:id="@+id/pictogramAddParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:minWidth="200dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pictogramAddIcon" />
+
     <EditText
         android:id="@+id/pictogramAddName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Podaj nazwę"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pictogramAddIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/pictogramAddParent" />
 
     <EditText
         android:id="@+id/pictogramAddPath"
@@ -109,5 +121,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pictogramAddPath" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
