@@ -76,16 +76,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         addOneOnCreate(db, "root", 0, "Spać", "p_spac", false, position++);
 
 
-        FileHelper fileHelper = new FileHelper(this.context);
-        List<PictogramModel> pictograms = getAll(false);
-        for (int i = 0; i < pictograms.size(); i++) {
-            String path = pictograms.get(i).getPath();
-            try {
-                fileHelper.copyResourceToLocal(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        FileHelper fileHelper = new FileHelper(this.context);
+//        List<PictogramModel> pictograms = getAll(false);
+//        for (int i = 0; i < pictograms.size(); i++) {
+//            String path = pictograms.get(i).getPath();
+//            try {
+//                fileHelper.copyResourceToLocal(path);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        Log.w("addOneOnCreate", "FINISH");
     }
 
     private boolean addOneOnCreate(SQLiteDatabase db, String parentKey, int role, String name, String path, boolean resource, int position) {
@@ -110,6 +112,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (insert == -1) {
             return false;
         } else {
+            FileHelper fileHelper = new FileHelper(this.context);
+            try {
+                fileHelper.copyResourceToLocal(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
     }
@@ -178,7 +187,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(P_COLUMN_ROLE, pictogramModel.getRole());
 
         long insert = db.insert(P_TABLE, null, cv);
-
+        db.close();
         if (insert == -1) {
             return true;
         } else {
@@ -242,12 +251,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public List<PictogramModel> getAll(boolean onlyActive) {
+        Log.w("getAll", "start");
         List<PictogramModel> returnList = new ArrayList<>();
         //get data from database
         String queryString = "SELECT * FROM " + P_TABLE + (onlyActive ? " WHERE " + P_COLUMN_ACTIVE + "=1" : "") + " ORDER BY " + P_COLUMN_POSITION;
+        Log.w("getAll", "start getReadableDatabase");
         SQLiteDatabase db = this.getReadableDatabase();
+        Log.w("getAll", "start db");
         Cursor cursor = db.rawQuery(queryString, null);
         // is result
+
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
@@ -264,6 +277,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
+        Log.w("getAll", "end");
         return returnList;
     }
 
@@ -272,6 +286,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //get data from database
         String queryString = "SELECT * FROM " + P_TABLE + " WHERE " + P_COLUMN_PARENT + "=" + byParent + " AND " + P_COLUMN_ACTIVE + "=1 ORDER BY " + P_COLUMN_POSITION;
         SQLiteDatabase db = this.getReadableDatabase();
+        //SQLiteDatabase db = this.db;
         Cursor cursor = db.rawQuery(queryString, null);
         // is result
         if (cursor.moveToFirst()) {

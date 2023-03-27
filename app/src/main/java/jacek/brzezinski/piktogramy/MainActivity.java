@@ -58,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
         simpleGrid = (GridView) findViewById(R.id.simpleGridView); // init GridView
         resources = this.getResources();
         packageName = this.getPackageName();
-        databaseHelper = new DataBaseHelper(MainActivity.this);
-
+        Log.w("DB HELPER", "NEW");
+        this.databaseHelper = new DataBaseHelper(MainActivity.this);
+        Log.w("DB HELPER", "created");
         mp = MediaPlayer.create(MainActivity.this, R.raw.start);
-        ShowPictograms(databaseHelper);
+        Log.w("MainActivity.onCreate", "ShowPictograms(databaseHelper)");
+        ShowPictograms(this.databaseHelper);
 
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -195,7 +197,10 @@ public class MainActivity extends AppCompatActivity {
         }
         int gridSize = (int) (displayMetrics.widthPixels / columns);
         simpleGrid.setNumColumns(columns);
+        Log.w("ShowPictograms", "getAll");
         //pictograms = databaseHelper.getAll(true);
+        Log.w("ShowPictograms", "getTree");
+
         pictograms = databaseHelper.getTree(viewParent);
         if (viewParent > 0) {
             //PictogramModel pictogramModelBack = new PictogramModel(-1, 0, PictogramModel.ROLE_BACK, "Back", "p_back", true, 0, true);
