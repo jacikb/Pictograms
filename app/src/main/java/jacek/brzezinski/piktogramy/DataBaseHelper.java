@@ -65,12 +65,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         addOneOnCreate(db, "d_jedzenie", 0, "Owoce", "p_owoce", false, position++);
         addOneOnCreate(db, "d_jedzenie", 0, "Czekolada", "p_czekolada", false, position++);
         addOneOnCreate(db, "d_jedzenie", 0, "Jabłko", "p_jablko", false, position++);
+        addOneOnCreate(db, "root", 0, "Boli", "p_boli", false, position++);
+        addOneOnCreate(db, "root", 0, "Gorące", "p_gorace", false, position++);
+        addOneOnCreate(db, "root", 0, "Jest mi gorąco", "p_jest_mi_goraco", false, position++);
+        addOneOnCreate(db, "root", 0, "Jest mi zimno", "p_jest_mi_zimno", false, position++);
         addOneOnCreate(db, "root", 0, "Komputer", "p_komputer", false, position++);
         addOneOnCreate(db, "root", 0, "Jeszcze", "p_jeszcze", false, position++);
         addOneOnCreate(db, "root", 0, "Dom", "p_dom", false, position++);
         addOneOnCreate(db, "root", 0, "Plecak", "p_plecak", false, position++);
         addOneOnCreate(db, "root", 0, "Spacer", "p_spacer", false, position++);
-        addOneOnCreate(db, "root", 0, "Zimno", "p_zimno", false, position++);
         addOneOnCreate(db, "root", 0, "Odpocząć", "p_odpoczac", false, position++);
         addOneOnCreate(db, "root", 0, "Kąpać", "p_kapac", false, position++);
         addOneOnCreate(db, "root", 0, "Spać", "p_spac", false, position++);
